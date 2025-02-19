@@ -1,5 +1,6 @@
 package com.jspider.jdbc_prepared_statement_crud_project_architecture.controller;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.jspider.jdbc_prepared_statement_crud_project_architecture.dao.CustomerDao;
@@ -15,7 +16,7 @@ public class CustomerController {
 		do
 		{
 			CustomerDao customerDao=new CustomerDao();
-			System.out.println("1. INSERT\n2. DISPLAY BY ID\n3. DISPLAY ALL\n4.\n5.\n6. EXIT");
+			System.out.println("1. INSERT\n2. DISPLAY BY ID\n3. DISPLAY ALL\n4.DELETE BY ID\n5.UPDATE NAME BY ID\n6. EXIT");
 			System.out.println("Enter your Option: ");
 			int choice=cin.nextInt();
 			switch(choice)
@@ -48,14 +49,26 @@ public class CustomerController {
 				System.out.println(customer);
 			}break;
 			case 3:{
-				
+				List<Customer> lst=customerDao.displayAllCustomerDao();
+				for(Customer customer:lst)
+					System.out.println(customer);
 			}break;
 			case 4:{
-				
+				System.out.println("Enter customer ID to delete: ");
+				int id=cin.nextInt();
+				int a=customerDao.deleteCustomerByIdDao(id);
+				String msg=a!=0?"Data Deleted":"Data Not Deleted, Please Check the ID";
+				System.out.println(msg);
 			}break;
 			case 5:
 			{
-				
+				System.out.println("Enter Customer ID: ");
+				int id=cin.nextInt();
+				System.out.println("Enter Customer Name: ");
+				String name=cin.next();
+				int a=customerDao.updateCustomerNameByIdDao(name, id);
+				String msg=a!=0?"Record Updated":"Record Updation failed, Please Check the ID";
+				System.out.println(msg);
 			}break;
 			case 6:{
 				flag=false;
